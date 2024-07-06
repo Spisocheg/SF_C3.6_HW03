@@ -1,0 +1,32 @@
+{% extends 'default.html' %}
+
+{% load censor_filter %}
+
+{% block title %}
+    Новости
+{% endblock title %}
+
+{% block header %}
+    <header class="bg-dark text-white p-1 ">
+        <a href="{% url 'list' %}" class="h1 d-flex justify-content-center text-decoration-none"><i class="h2 mt-2 m-1 bi bi-hand-index"></i>Новости</a>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    {% for n in news %}
+        <div class="d-flex justify-content-center mt-3">
+            <div class="card shadow-sm" style="width: 50rem;">
+                <div class="card-header d-flex justify-content-between bg-dark-subtle">
+                    <h3 class="card-title">{{ n.title|censor }}</h3>
+                    <p class="card-subtitle opacity-75 mt-2">{{ n.creationDate|date:"d.m.Y, h:i" }}</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text fs-5">{{ n.preview|censor }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    <a class="card-link text-dark" href="{{ n.get_absolute_url }}">Читать далее...</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}
